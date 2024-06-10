@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Léxico y Sintáctico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Analizador Léxico y Sintáctico</h1>
+        <form method="post">
+            <textarea name="codigo" rows="10" cols="50">{{ codigo }}</textarea><br>
+            <button type="submit">Analizar Código</button>
+        </form>
+        {% if resultado_lexico %}
+        <h2>Resultado del Análisis Léxico:</h2>
+        <table>
+            <tr>
+                <th>Token</th>
+                <th>Reservada</th>
+                <th>Identificador</th>
+                <th>Número</th>
+                <th>Símbolo</th>
+                <th>Paréntesis Izquierdo</th>
+                <th>Paréntesis Derecho</th>
+                <th>Llave Izquierda</th>
+                <th>Llave Derecha</th>
+            </tr>
+            {% for token in resultado_lexico %}
+            <tr>
+                <td>{{ token.Token }}</td>
+                <td>{{ token.reservada }}</td>
+                <td>{{ token.identificador }}</td>
+                <td>{{ token.numero }}</td>
+                <td>{{ token.simbolo }}</td>
+                <td>{{ token.parentesis_izquierdo }}</td>
+                <td>{{ token.parentesis_derecho }}</td>
+                <td>{{ token.llave_izquierda }}</td>
+                <td>{{ token.llave_derecha }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><strong>Total:</strong></td>
+                <td>{{ totales.reservada }}</td>
+                <td>{{ totales.identificador }}</td>
+                <td>{{ totales.numero }}</td>
+                <td>{{ totales.simbolo }}</td>
+                <td>{{ totales.parentesis_izquierdo }}</td>
+                <td>{{ totales.parentesis_derecho }}</td>
+                <td>{{ totales.llave_izquierda }}</td>
+                <td>{{ totales.llave_derecha }}</td>
+            </tr>
+        </table>
+        {% endif %}
+        {% if resultado_sintactico %}
+        <h2>Resultado del Análisis Sintáctico:</h2>
+        <p>{{ resultado_sintactico }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

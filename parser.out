@@ -1,0 +1,501 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    LBRACE
+    RBRACE
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAMA stmt_list
+Rule 2     stmt_list -> stmt stmt_list
+Rule 3     stmt_list -> stmt
+Rule 4     stmt -> decl
+Rule 5     stmt -> assign
+Rule 6     stmt -> suma
+Rule 7     decl -> INT ID SEMI
+Rule 8     assign -> ID EQUALS expr SEMI
+Rule 9     suma -> SUMA LPAREN expr RPAREN SEMI
+Rule 10    expr -> expr PLUS term
+Rule 11    expr -> expr MINUS term
+Rule 12    expr -> term
+Rule 13    term -> term TIMES factor
+Rule 14    term -> term DIVIDE factor
+Rule 15    term -> factor
+Rule 16    factor -> ID
+Rule 17    factor -> NUMBER
+Rule 18    factor -> LPAREN expr RPAREN
+
+Terminals, with rules where they appear
+
+DIVIDE               : 14
+EQUALS               : 8
+ID                   : 7 8 16
+INT                  : 7
+LBRACE               : 
+LPAREN               : 9 18
+MINUS                : 11
+NUMBER               : 17
+PLUS                 : 10
+PROGRAMA             : 1
+RBRACE               : 
+RPAREN               : 9 18
+SEMI                 : 7 8 9
+SUMA                 : 9
+TIMES                : 13
+error                : 
+
+Nonterminals, with rules where they appear
+
+assign               : 5
+decl                 : 4
+expr                 : 8 9 10 11 18
+factor               : 13 14 15
+program              : 0
+stmt                 : 2 3
+stmt_list            : 1 2
+suma                 : 6
+term                 : 10 11 12 13 14
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAMA stmt_list
+
+    PROGRAMA        shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAMA . stmt_list
+    (2) stmt_list -> . stmt stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . decl
+    (5) stmt -> . assign
+    (6) stmt -> . suma
+    (7) decl -> . INT ID SEMI
+    (8) assign -> . ID EQUALS expr SEMI
+    (9) suma -> . SUMA LPAREN expr RPAREN SEMI
+
+    INT             shift and go to state 8
+    ID              shift and go to state 9
+    SUMA            shift and go to state 10
+
+    stmt_list                      shift and go to state 3
+    stmt                           shift and go to state 4
+    decl                           shift and go to state 5
+    assign                         shift and go to state 6
+    suma                           shift and go to state 7
+
+state 3
+
+    (1) program -> PROGRAMA stmt_list .
+
+    $end            reduce using rule 1 (program -> PROGRAMA stmt_list .)
+
+
+state 4
+
+    (2) stmt_list -> stmt . stmt_list
+    (3) stmt_list -> stmt .
+    (2) stmt_list -> . stmt stmt_list
+    (3) stmt_list -> . stmt
+    (4) stmt -> . decl
+    (5) stmt -> . assign
+    (6) stmt -> . suma
+    (7) decl -> . INT ID SEMI
+    (8) assign -> . ID EQUALS expr SEMI
+    (9) suma -> . SUMA LPAREN expr RPAREN SEMI
+
+    $end            reduce using rule 3 (stmt_list -> stmt .)
+    INT             shift and go to state 8
+    ID              shift and go to state 9
+    SUMA            shift and go to state 10
+
+    stmt                           shift and go to state 4
+    stmt_list                      shift and go to state 11
+    decl                           shift and go to state 5
+    assign                         shift and go to state 6
+    suma                           shift and go to state 7
+
+state 5
+
+    (4) stmt -> decl .
+
+    INT             reduce using rule 4 (stmt -> decl .)
+    ID              reduce using rule 4 (stmt -> decl .)
+    SUMA            reduce using rule 4 (stmt -> decl .)
+    $end            reduce using rule 4 (stmt -> decl .)
+
+
+state 6
+
+    (5) stmt -> assign .
+
+    INT             reduce using rule 5 (stmt -> assign .)
+    ID              reduce using rule 5 (stmt -> assign .)
+    SUMA            reduce using rule 5 (stmt -> assign .)
+    $end            reduce using rule 5 (stmt -> assign .)
+
+
+state 7
+
+    (6) stmt -> suma .
+
+    INT             reduce using rule 6 (stmt -> suma .)
+    ID              reduce using rule 6 (stmt -> suma .)
+    SUMA            reduce using rule 6 (stmt -> suma .)
+    $end            reduce using rule 6 (stmt -> suma .)
+
+
+state 8
+
+    (7) decl -> INT . ID SEMI
+
+    ID              shift and go to state 12
+
+
+state 9
+
+    (8) assign -> ID . EQUALS expr SEMI
+
+    EQUALS          shift and go to state 13
+
+
+state 10
+
+    (9) suma -> SUMA . LPAREN expr RPAREN SEMI
+
+    LPAREN          shift and go to state 14
+
+
+state 11
+
+    (2) stmt_list -> stmt stmt_list .
+
+    $end            reduce using rule 2 (stmt_list -> stmt stmt_list .)
+
+
+state 12
+
+    (7) decl -> INT ID . SEMI
+
+    SEMI            shift and go to state 15
+
+
+state 13
+
+    (8) assign -> ID EQUALS . expr SEMI
+    (10) expr -> . expr PLUS term
+    (11) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . ID
+    (17) factor -> . NUMBER
+    (18) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 21
+
+    expr                           shift and go to state 17
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 14
+
+    (9) suma -> SUMA LPAREN . expr RPAREN SEMI
+    (10) expr -> . expr PLUS term
+    (11) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . ID
+    (17) factor -> . NUMBER
+    (18) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 21
+
+    expr                           shift and go to state 22
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 15
+
+    (7) decl -> INT ID SEMI .
+
+    INT             reduce using rule 7 (decl -> INT ID SEMI .)
+    ID              reduce using rule 7 (decl -> INT ID SEMI .)
+    SUMA            reduce using rule 7 (decl -> INT ID SEMI .)
+    $end            reduce using rule 7 (decl -> INT ID SEMI .)
+
+
+state 16
+
+    (16) factor -> ID .
+
+    TIMES           reduce using rule 16 (factor -> ID .)
+    DIVIDE          reduce using rule 16 (factor -> ID .)
+    SEMI            reduce using rule 16 (factor -> ID .)
+    PLUS            reduce using rule 16 (factor -> ID .)
+    MINUS           reduce using rule 16 (factor -> ID .)
+    RPAREN          reduce using rule 16 (factor -> ID .)
+
+
+state 17
+
+    (8) assign -> ID EQUALS expr . SEMI
+    (10) expr -> expr . PLUS term
+    (11) expr -> expr . MINUS term
+
+    SEMI            shift and go to state 23
+    PLUS            shift and go to state 24
+    MINUS           shift and go to state 25
+
+
+state 18
+
+    (12) expr -> term .
+    (13) term -> term . TIMES factor
+    (14) term -> term . DIVIDE factor
+
+    SEMI            reduce using rule 12 (expr -> term .)
+    PLUS            reduce using rule 12 (expr -> term .)
+    MINUS           reduce using rule 12 (expr -> term .)
+    RPAREN          reduce using rule 12 (expr -> term .)
+    TIMES           shift and go to state 26
+    DIVIDE          shift and go to state 27
+
+
+state 19
+
+    (15) term -> factor .
+
+    TIMES           reduce using rule 15 (term -> factor .)
+    DIVIDE          reduce using rule 15 (term -> factor .)
+    SEMI            reduce using rule 15 (term -> factor .)
+    PLUS            reduce using rule 15 (term -> factor .)
+    MINUS           reduce using rule 15 (term -> factor .)
+    RPAREN          reduce using rule 15 (term -> factor .)
+
+
+state 20
+
+    (17) factor -> NUMBER .
+
+    TIMES           reduce using rule 17 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 17 (factor -> NUMBER .)
+    SEMI            reduce using rule 17 (factor -> NUMBER .)
+    PLUS            reduce using rule 17 (factor -> NUMBER .)
+    MINUS           reduce using rule 17 (factor -> NUMBER .)
+    RPAREN          reduce using rule 17 (factor -> NUMBER .)
+
+
+state 21
+
+    (18) factor -> LPAREN . expr RPAREN
+    (10) expr -> . expr PLUS term
+    (11) expr -> . expr MINUS term
+    (12) expr -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . ID
+    (17) factor -> . NUMBER
+    (18) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 21
+
+    expr                           shift and go to state 28
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 22
+
+    (9) suma -> SUMA LPAREN expr . RPAREN SEMI
+    (10) expr -> expr . PLUS term
+    (11) expr -> expr . MINUS term
+
+    RPAREN          shift and go to state 29
+    PLUS            shift and go to state 24
+    MINUS           shift and go to state 25
+
+
+state 23
+
+    (8) assign -> ID EQUALS expr SEMI .
+
+    INT             reduce using rule 8 (assign -> ID EQUALS expr SEMI .)
+    ID              reduce using rule 8 (assign -> ID EQUALS expr SEMI .)
+    SUMA            reduce using rule 8 (assign -> ID EQUALS expr SEMI .)
+    $end            reduce using rule 8 (assign -> ID EQUALS expr SEMI .)
+
+
+state 24
+
+    (10) expr -> expr PLUS . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . ID
+    (17) factor -> . NUMBER
+    (18) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 21
+
+    term                           shift and go to state 30
+    factor                         shift and go to state 19
+
+state 25
+
+    (11) expr -> expr MINUS . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . ID
+    (17) factor -> . NUMBER
+    (18) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 21
+
+    term                           shift and go to state 31
+    factor                         shift and go to state 19
+
+state 26
+
+    (13) term -> term TIMES . factor
+    (16) factor -> . ID
+    (17) factor -> . NUMBER
+    (18) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 21
+
+    factor                         shift and go to state 32
+
+state 27
+
+    (14) term -> term DIVIDE . factor
+    (16) factor -> . ID
+    (17) factor -> . NUMBER
+    (18) factor -> . LPAREN expr RPAREN
+
+    ID              shift and go to state 16
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 21
+
+    factor                         shift and go to state 33
+
+state 28
+
+    (18) factor -> LPAREN expr . RPAREN
+    (10) expr -> expr . PLUS term
+    (11) expr -> expr . MINUS term
+
+    RPAREN          shift and go to state 34
+    PLUS            shift and go to state 24
+    MINUS           shift and go to state 25
+
+
+state 29
+
+    (9) suma -> SUMA LPAREN expr RPAREN . SEMI
+
+    SEMI            shift and go to state 35
+
+
+state 30
+
+    (10) expr -> expr PLUS term .
+    (13) term -> term . TIMES factor
+    (14) term -> term . DIVIDE factor
+
+    SEMI            reduce using rule 10 (expr -> expr PLUS term .)
+    PLUS            reduce using rule 10 (expr -> expr PLUS term .)
+    MINUS           reduce using rule 10 (expr -> expr PLUS term .)
+    RPAREN          reduce using rule 10 (expr -> expr PLUS term .)
+    TIMES           shift and go to state 26
+    DIVIDE          shift and go to state 27
+
+
+state 31
+
+    (11) expr -> expr MINUS term .
+    (13) term -> term . TIMES factor
+    (14) term -> term . DIVIDE factor
+
+    SEMI            reduce using rule 11 (expr -> expr MINUS term .)
+    PLUS            reduce using rule 11 (expr -> expr MINUS term .)
+    MINUS           reduce using rule 11 (expr -> expr MINUS term .)
+    RPAREN          reduce using rule 11 (expr -> expr MINUS term .)
+    TIMES           shift and go to state 26
+    DIVIDE          shift and go to state 27
+
+
+state 32
+
+    (13) term -> term TIMES factor .
+
+    TIMES           reduce using rule 13 (term -> term TIMES factor .)
+    DIVIDE          reduce using rule 13 (term -> term TIMES factor .)
+    SEMI            reduce using rule 13 (term -> term TIMES factor .)
+    PLUS            reduce using rule 13 (term -> term TIMES factor .)
+    MINUS           reduce using rule 13 (term -> term TIMES factor .)
+    RPAREN          reduce using rule 13 (term -> term TIMES factor .)
+
+
+state 33
+
+    (14) term -> term DIVIDE factor .
+
+    TIMES           reduce using rule 14 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 14 (term -> term DIVIDE factor .)
+    SEMI            reduce using rule 14 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 14 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 14 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 14 (term -> term DIVIDE factor .)
+
+
+state 34
+
+    (18) factor -> LPAREN expr RPAREN .
+
+    TIMES           reduce using rule 18 (factor -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 18 (factor -> LPAREN expr RPAREN .)
+    SEMI            reduce using rule 18 (factor -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 18 (factor -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 18 (factor -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 18 (factor -> LPAREN expr RPAREN .)
+
+
+state 35
+
+    (9) suma -> SUMA LPAREN expr RPAREN SEMI .
+
+    INT             reduce using rule 9 (suma -> SUMA LPAREN expr RPAREN SEMI .)
+    ID              reduce using rule 9 (suma -> SUMA LPAREN expr RPAREN SEMI .)
+    SUMA            reduce using rule 9 (suma -> SUMA LPAREN expr RPAREN SEMI .)
+    $end            reduce using rule 9 (suma -> SUMA LPAREN expr RPAREN SEMI .)
+
