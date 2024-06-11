@@ -6,14 +6,18 @@ tokens = [
     'ID', 'NUMBER',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS',
     'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE',
-    'SEMI'
+    'SEMI', 'COLON', 'COMMA', 'LBRACKET', 'RBRACKET',
+    'STRING_LITERAL'
 ]
 
 # Palabras reservadas
 reserved = {
-    'int': 'INT',
-    'programa': 'PROGRAMA',
-    'suma': 'SUMA'
+    'object': 'OBJECT',
+    'def': 'DEF',
+    'Array': 'ARRAY',
+    'String': 'STRING',
+    'Unit': 'UNIT',
+    'println': 'PRINTLN'
 }
 
 tokens += list(reserved.values())
@@ -29,6 +33,10 @@ t_RPAREN = r'\)'
 t_LBRACE = r'\{'
 t_RBRACE = r'\}'
 t_SEMI = r';'
+t_COLON = r':'
+t_COMMA = r','
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
 
 # Expresiones regulares para tokens más complejos
 def t_ID(t):
@@ -39,6 +47,10 @@ def t_ID(t):
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+def t_STRING_LITERAL(t):
+    r'\".*?\"'
     return t
 
 # Ignorar espacios y tabulaciones
@@ -60,56 +72,31 @@ precedence = (
 
 # Definición de la gramática
 def p_program(p):
-    'program : PROGRAMA stmt_list'
-    print("Programa válido")
+    'program : OBJECT ID LBRACE main_def RBRACE'
+    pass
+
+def p_main_def(p):
+    'main_def : DEF ID LPAREN args RPAREN COLON UNIT EQUALS LBRACE stmt_list RBRACE'
+    pass
+
+def p_args(p):
+    'args : ID COLON ARRAY LBRACKET STRING RBRACKET'
+    pass
 
 def p_stmt_list(p):
-    '''stmt_list : stmt stmt_list
+    '''stmt_list : stmt_list stmt
                  | stmt'''
     pass
 
 def p_stmt(p):
-    '''stmt : decl
-            | assign
-            | suma'''
+    'stmt : PRINTLN LPAREN STRING_LITERAL RPAREN SEMI'
     pass
 
-def p_decl(p):
-    'decl : INT ID SEMI'
-    pass
-
-def p_assign(p):
-    'assign : ID EQUALS expr SEMI'
-    pass
-
-def p_suma(p):
-    'suma : SUMA LPAREN expr RPAREN SEMI'
-    pass
-
-def p_expr(p):
-    '''expr : expr PLUS term
-            | expr MINUS term
-            | term'''
-    pass
-
-def p_term(p):
-    '''term : term TIMES factor
-            | term DIVIDE factor
-            | factor'''
-    pass
-
-def p_factor(p):
-    '''factor : ID
-              | NUMBER
-              | LPAREN expr RPAREN'''
-    pass
-
-# Manejo de errores sintácticos
 def p_error(p):
     if p:
-        print(f"Error de sintaxis en '{p.value}'")
+        raise SyntaxError(f"Error de sintaxis en '{p.value}'")
     else:
-        print("Error de sintaxis al final de la entrada")
+        raise SyntaxError("Error de sintaxis al final de la entrada")
 
 # Construir el parser
 parser = yacc.yacc()
@@ -128,11 +115,11 @@ def analizar_codigo(codigo):
         tokens.append(token_info)
     resultado_lexico = tokens
 
+    resultado_sintactico = "Programa válido"
     try:
         parser.parse(codigo)
-        resultado_sintactico = "Programa válido"
-    except Exception as e:
-        resultado_sintactico = str(e)
+    except SyntaxError as e:
+        resultado_sintactico = f"Programa inválido: {e}"
 
     # Clasificación de tokens para la tabla
     resultado_clasificado = []
@@ -152,7 +139,7 @@ def analizar_codigo(codigo):
             'reservada': 'x' if token['token'] in reserved.values() else '',
             'identificador': 'x' if token['token'] == 'ID' else '',
             'numero': 'x' if token['token'] == 'NUMBER' else '',
-            'simbolo': 'x' if token['token'] in ['PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'SEMI'] else '',
+            'simbolo': 'x' if token['token'] in ['PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'SEMI', 'COLON', 'COMMA'] else '',
             'parentesis_izquierdo': 'x' if token['token'] == 'LPAREN' else '',
             'parentesis_derecho': 'x' if token['token'] == 'RPAREN' else '',
             'llave_izquierda': 'x' if token['token'] == 'LBRACE' else '',

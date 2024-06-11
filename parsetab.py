@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftTIMESDIVIDEDIVIDE EQUALS ID INT LBRACE LPAREN MINUS NUMBER PLUS PROGRAMA RBRACE RPAREN SEMI SUMA TIMESprogram : PROGRAMA stmt_liststmt_list : stmt stmt_list\n                 | stmtstmt : decl\n            | assign\n            | sumadecl : INT ID SEMIassign : ID EQUALS expr SEMIsuma : SUMA LPAREN expr RPAREN SEMIexpr : expr PLUS term\n            | expr MINUS term\n            | termterm : term TIMES factor\n            | term DIVIDE factor\n            | factorfactor : ID\n              | NUMBER\n              | LPAREN expr RPAREN'
+_lr_signature = 'leftPLUSMINUSleftTIMESDIVIDEARRAY COLON COMMA DEF DIVIDE EQUALS ID LBRACE LBRACKET LPAREN MINUS NUMBER OBJECT PLUS PRINTLN RBRACE RBRACKET RPAREN SEMI STRING STRING_LITERAL TIMES UNITprogram : OBJECT ID LBRACE main_def RBRACEmain_def : DEF ID LPAREN args RPAREN COLON UNIT EQUALS LBRACE stmt_list RBRACEargs : ID COLON ARRAY LBRACKET STRING RBRACKETstmt_list : stmt_list stmt\n                 | stmtstmt : PRINTLN LPAREN STRING_LITERAL RPAREN SEMI'
     
-_lr_action_items = {'PROGRAMA':([0,],[2,]),'$end':([1,3,4,5,6,7,11,15,23,35,],[0,-1,-3,-4,-5,-6,-2,-7,-8,-9,]),'INT':([2,4,5,6,7,15,23,35,],[8,8,-4,-5,-6,-7,-8,-9,]),'ID':([2,4,5,6,7,8,13,14,15,21,23,24,25,26,27,35,],[9,9,-4,-5,-6,12,16,16,-7,16,-8,16,16,16,16,-9,]),'SUMA':([2,4,5,6,7,15,23,35,],[10,10,-4,-5,-6,-7,-8,-9,]),'EQUALS':([9,],[13,]),'LPAREN':([10,13,14,21,24,25,26,27,],[14,21,21,21,21,21,21,21,]),'SEMI':([12,16,17,18,19,20,29,30,31,32,33,34,],[15,-16,23,-12,-15,-17,35,-10,-11,-13,-14,-18,]),'NUMBER':([13,14,21,24,25,26,27,],[20,20,20,20,20,20,20,]),'TIMES':([16,18,19,20,30,31,32,33,34,],[-16,26,-15,-17,26,26,-13,-14,-18,]),'DIVIDE':([16,18,19,20,30,31,32,33,34,],[-16,27,-15,-17,27,27,-13,-14,-18,]),'PLUS':([16,17,18,19,20,22,28,30,31,32,33,34,],[-16,24,-12,-15,-17,24,24,-10,-11,-13,-14,-18,]),'MINUS':([16,17,18,19,20,22,28,30,31,32,33,34,],[-16,25,-12,-15,-17,25,25,-10,-11,-13,-14,-18,]),'RPAREN':([16,18,19,20,22,28,30,31,32,33,34,],[-16,-12,-15,-17,29,34,-10,-11,-13,-14,-18,]),}
+_lr_action_items = {'OBJECT':([0,],[2,]),'$end':([1,7,],[0,-1,]),'ID':([2,6,9,],[3,8,10,]),'LBRACE':([3,19,],[4,21,]),'DEF':([4,],[6,]),'RBRACE':([5,22,23,25,26,30,],[7,25,-5,-2,-4,-6,]),'LPAREN':([8,24,],[9,27,]),'COLON':([10,13,],[12,15,]),'RPAREN':([11,20,28,],[13,-3,29,]),'ARRAY':([12,],[14,]),'LBRACKET':([14,],[16,]),'UNIT':([15,],[17,]),'STRING':([16,],[18,]),'EQUALS':([17,],[19,]),'RBRACKET':([18,],[20,]),'PRINTLN':([21,22,23,26,30,],[24,24,-5,-4,-6,]),'STRING_LITERAL':([27,],[28,]),'SEMI':([29,],[30,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'stmt_list':([2,4,],[3,11,]),'stmt':([2,4,],[4,4,]),'decl':([2,4,],[5,5,]),'assign':([2,4,],[6,6,]),'suma':([2,4,],[7,7,]),'expr':([13,14,21,],[17,22,28,]),'term':([13,14,21,24,25,],[18,18,18,30,31,]),'factor':([13,14,21,24,25,26,27,],[19,19,19,19,19,32,33,]),}
+_lr_goto_items = {'program':([0,],[1,]),'main_def':([4,],[5,]),'args':([9,],[11,]),'stmt_list':([21,],[22,]),'stmt':([21,22,],[23,26,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,22 +27,10 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> PROGRAMA stmt_list','program',2,'p_program','analizador.py',63),
-  ('stmt_list -> stmt stmt_list','stmt_list',2,'p_stmt_list','analizador.py',67),
-  ('stmt_list -> stmt','stmt_list',1,'p_stmt_list','analizador.py',68),
-  ('stmt -> decl','stmt',1,'p_stmt','analizador.py',72),
-  ('stmt -> assign','stmt',1,'p_stmt','analizador.py',73),
-  ('stmt -> suma','stmt',1,'p_stmt','analizador.py',74),
-  ('decl -> INT ID SEMI','decl',3,'p_decl','analizador.py',78),
-  ('assign -> ID EQUALS expr SEMI','assign',4,'p_assign','analizador.py',82),
-  ('suma -> SUMA LPAREN expr RPAREN SEMI','suma',5,'p_suma','analizador.py',86),
-  ('expr -> expr PLUS term','expr',3,'p_expr','analizador.py',90),
-  ('expr -> expr MINUS term','expr',3,'p_expr','analizador.py',91),
-  ('expr -> term','expr',1,'p_expr','analizador.py',92),
-  ('term -> term TIMES factor','term',3,'p_term','analizador.py',96),
-  ('term -> term DIVIDE factor','term',3,'p_term','analizador.py',97),
-  ('term -> factor','term',1,'p_term','analizador.py',98),
-  ('factor -> ID','factor',1,'p_factor','analizador.py',102),
-  ('factor -> NUMBER','factor',1,'p_factor','analizador.py',103),
-  ('factor -> LPAREN expr RPAREN','factor',3,'p_factor','analizador.py',104),
+  ('program -> OBJECT ID LBRACE main_def RBRACE','program',5,'p_program','analizador.py',75),
+  ('main_def -> DEF ID LPAREN args RPAREN COLON UNIT EQUALS LBRACE stmt_list RBRACE','main_def',11,'p_main_def','analizador.py',79),
+  ('args -> ID COLON ARRAY LBRACKET STRING RBRACKET','args',6,'p_args','analizador.py',83),
+  ('stmt_list -> stmt_list stmt','stmt_list',2,'p_stmt_list','analizador.py',87),
+  ('stmt_list -> stmt','stmt_list',1,'p_stmt_list','analizador.py',88),
+  ('stmt -> PRINTLN LPAREN STRING_LITERAL RPAREN SEMI','stmt',5,'p_stmt','analizador.py',92),
 ]
